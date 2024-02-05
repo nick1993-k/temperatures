@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1j2lrr6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.19.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
+  <bpmn:collaboration id="Collaboration_18qtas9">
+    <bpmn:participant id="Participant_1sac4r3" name="TemperaturesProcess" processRef="TemperaturesProcess" />
+  </bpmn:collaboration>
+  <bpmn:process id="TemperaturesProcess" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="start">
+      <bpmn:outgoing>Flow_1qnpd3r</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0lhng5g" name="end">
+      <bpmn:incoming>Flow_07d2i2k</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1qnpd3r" sourceRef="StartEvent_1" targetRef="Activity_1tmk6qw" />
+    <bpmn:sequenceFlow id="Flow_0f18fkw" sourceRef="Activity_1tmk6qw" targetRef="Activity_0774eo0" />
+    <bpmn:sequenceFlow id="Flow_07d2i2k" sourceRef="Activity_0774eo0" targetRef="Event_0lhng5g" />
+    <bpmn:serviceTask id="Activity_0774eo0" name="Persist to Temperatues DB" camunda:class="com.cognity.temperatures.delegates.PersistFilteredCities">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="filteredCities">${execution.getVariable("filteredCities")}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0f18fkw</bpmn:incoming>
+      <bpmn:outgoing>Flow_07d2i2k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1tmk6qw" name="Get Cities" camunda:class="com.cognity.temperatures.delegates.GetCities">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="citiesData">${execution.getVariable("citiesData")}</camunda:inputParameter>
+          <camunda:inputParameter name="numberOfCities">${execution.getVariable("numberOfCities")}</camunda:inputParameter>
+          <camunda:inputParameter name="highestTemperature">${execution.getVariable("highestTemperature")}</camunda:inputParameter>
+          <camunda:inputParameter name="lowestTemperature">${execution.getVariable("lowestTemperature")}</camunda:inputParameter>
+          <camunda:outputParameter name="filteredCities">${execution.getVariable("filteredCities")}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1qnpd3r</bpmn:incoming>
+      <bpmn:outgoing>Flow_0f18fkw</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_18qtas9">
+      <bpmndi:BPMNShape id="Participant_1sac4r3_di" bpmnElement="Participant_1sac4r3" isHorizontal="true">
+        <dc:Bounds x="129" y="79" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="202" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="209" y="215" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0lhng5g_di" bpmnElement="Event_0lhng5g">
+        <dc:Bounds x="622" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="631" y="215" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lec5w3_di" bpmnElement="Activity_0774eo0">
+        <dc:Bounds x="440" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09jnhpi_di" bpmnElement="Activity_1tmk6qw">
+        <dc:Bounds x="290" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1qnpd3r_di" bpmnElement="Flow_1qnpd3r">
+        <di:waypoint x="238" y="190" />
+        <di:waypoint x="290" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f18fkw_di" bpmnElement="Flow_0f18fkw">
+        <di:waypoint x="390" y="190" />
+        <di:waypoint x="440" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07d2i2k_di" bpmnElement="Flow_07d2i2k">
+        <di:waypoint x="540" y="190" />
+        <di:waypoint x="622" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
