@@ -6,7 +6,7 @@ import com.cognity.temperatures.service.CamundaProcessService;
 import com.cognity.temperatures.service.MockoonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +22,7 @@ public class TemperaturesController {
         this.camundaService = camundaService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<MockoonResponseDTO> getFilteredCities(@RequestBody RequestDto dto) {
         MockoonResponseDTO mockoonResponseDTO = mockoonService.fetchDataFromMockoon();
         int numberOfCities = dto.getNumberOfCities();
